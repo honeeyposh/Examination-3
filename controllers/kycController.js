@@ -1,16 +1,25 @@
 const kycModel = require("../models/kycModel");
 const userModel = require("../models/userModel");
 exports.createKyc = async (req, res) => {
-  const payload = req.body;
+  const { displayPix, docType, frontPix, backPix } = req.body;
   const { id } = req.user;
+  if (!displayPix || !docType || !frontPix || !backPix) {
+    res.send("Please provide displayPix,docType,frontPix,backPix");
+  }
   try {
     const ckeckKycExist = await kycModel.findOne({ user: id });
     if (ckeckKycExist) {
       return res.json({ message: "kyc already exist" });
     }
-    const newKyc = await kycModel.create({ user: id, ...payload });
+    const newKyc = await kycModel.create({
+      user: id,
+      displayPix,
+      docType,
+      frontPix,
+      backPix,
+    });
     await userModel.findByIdAndUpdate(id, { kyc: newKyc.id }, { new: true });
-    return res.send("kyc added succefully");
+    return res.status(201).json({ message: "kyc added succefully" });
   } catch (error) {
     res.send(error.message);
   }
@@ -20,7 +29,7 @@ exports.getkyc = async (req, res) => {
   const { id } = req.user;
   try {
     const kyc = await kycModel.findById(kycId).populate("user", "id name");
-    console.log(kyc);
+    // console.log(kyc);
     if (!kyc) {
       return res.send("kyc doesnt exist");
     }

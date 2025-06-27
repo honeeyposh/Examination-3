@@ -30,12 +30,6 @@ const userSchema = new mongoose.Schema({
       ref: "Post",
     },
   ],
-  books: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: "Book",
-    },
-  ],
 });
 const userModel = mongoose.model("User", userSchema);
 module.exports = userModel;

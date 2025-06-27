@@ -62,7 +62,7 @@ exports.updateUser = async (req, res, next) => {
       { ...body },
       { new: true }
     );
-    return res.json({ sucess: true, updatedUser });
+    return res.status(200).json({ sucess: true, updatedUser });
   } catch (error) {
     return res.send(error.message);
   }

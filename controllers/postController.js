@@ -19,7 +19,9 @@ exports.createPost = async (req, res) => {
 exports.getSinglePost = async (req, res) => {
   const { postId } = req.params;
   try {
-    const post = await postModel.findById(postId).populate("creator");
+    const post = await postModel
+      .findById(postId)
+      .populate("creator", "id name email");
     if (!post) {
       return res.send("No post");
     }
