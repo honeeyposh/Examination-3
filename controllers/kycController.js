@@ -31,7 +31,7 @@ exports.getkyc = async (req, res) => {
     const kyc = await kycModel.findById(kycId).populate("user", "id name");
     // console.log(kyc);
     if (!kyc) {
-      return res.send("kyc doesnt exist");
+      return res.status(200).send("kyc doesnt exist");
     }
     // console.log(kyc.user.id);
     if (kyc.user.id != id) {
@@ -55,7 +55,7 @@ exports.deleteKyc = async (req, res) => {
     }
     await kycModel.findByIdAndDelete(kycId);
     await userModel.findByIdAndUpdate(id, { kyc: null }, { new: true });
-    return res.send("successfully deleted");
+    return res.status(200).send("successfully deleted");
   } catch (error) {
     res.send(error.message);
   }

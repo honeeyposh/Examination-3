@@ -61,7 +61,7 @@ exports.deletePost = async (req, res) => {
       { new: true }
     );
     await postModel.findByIdAndDelete(postId);
-    return res.send("post deleted succesfully");
+    return res.status(200).send("post deleted succesfully");
   } catch (error) {
     res.send(error.message);
   }
@@ -82,7 +82,7 @@ exports.updatePost = async (req, res) => {
       { ...body },
       { new: true }
     );
-    return res.json(updatedPost);
+    return res.status(200).json(updatedPost);
   } catch (error) {
     return res.send(error.message);
   }

@@ -77,7 +77,7 @@ exports.deleteUser = async (req, res, next) => {
     await userModel.findByIdAndDelete(id);
     await kycModel.findOneAndDelete({ user: req.user.id });
     await postModel.deleteMany({ creator: req.user.id });
-    return res.json({ success: true });
+    return res.status(200).json({ success: true });
   } catch (error) {
     return res.send(error.message);
   }
